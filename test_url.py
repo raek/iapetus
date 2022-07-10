@@ -146,6 +146,7 @@ def test_query_reserved_percent_encoded():
     assert normalize_url("gemini://example.com/?:") == "gemini://example.com/?%3A"
 
 
+# [URI] 6.3.  Component Recomposition
 def test_empty_query_distinct_from_no_query():
     assert normalize_url("gemini://example.com/?") == "gemini://example.com/?"
 
@@ -175,5 +176,6 @@ def test_fragment_reserved_percent_encoded():
     assert normalize_url("gemini://example.com/#:") == "gemini://example.com/#%3A"
 
 
+# [URI] 6.3.  Component Recomposition
 def test_empty_fragment_distinct_from_no_fragment():
     assert normalize_url("gemini://example.com/#") == "gemini://example.com/#"
