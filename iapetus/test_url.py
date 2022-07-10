@@ -1,6 +1,6 @@
 import pytest
 
-from iapetus import normalize_url, host_port_pair_from_url, NormalizationError, NonGeminiUrlError
+from iapetus.url import normalize_url, host_port_pair_from_url, NormalizationError, NonGeminiUrlError
 
 
 # References
