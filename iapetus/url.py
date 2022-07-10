@@ -17,7 +17,7 @@ def normalize_url(s):
     u = urlsplit(s)
     scheme = u.scheme.lower()
     if scheme != "gemini":
-        raise NonGeminiUrlError()
+        raise NonGeminiUrlError("URL is not a Gemini URL")
     if u.netloc == "":
         raise NormalizationError("Gemini URI scheme requires the authority component")
     if u.username or u.password:
