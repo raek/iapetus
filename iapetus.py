@@ -4,13 +4,17 @@ from urllib.parse import urlsplit, urlunsplit, quote, unquote
 DEFAULT_PORT = 1965
 
 
+class NormalizationError(ValueError):
+    pass
+
+
 def normalize_url(s):
     u = urlsplit(s)
     scheme = u.scheme.lower()
     if u.netloc == "":
-        raise ValueError("Gemini URI scheme requires the authority component")
+        raise NormalizationError("Gemini URI scheme requires the authority component")
     if u.username or u.password:
-        raise ValueError("Gemini URI scheme does not support userinfo components")
+        raise NormalizationError("Gemini URI scheme does not support userinfo components")
     if u.hostname is not None:
         hostname = unquote(u.hostname).encode("idna").decode("us-ascii")
     else:

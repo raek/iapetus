@@ -1,6 +1,6 @@
 import pytest
 
-from iapetus import normalize_url
+from iapetus import normalize_url, NormalizationError
 
 
 # References
@@ -21,13 +21,13 @@ def test_scheme_case_lowered():
 
 # [GEMINI] 1.2 Gemini URI scheme
 def test_netloc_required():
-    with pytest.raises(ValueError):
+    with pytest.raises(NormalizationError):
         normalize_url("gemini:///")
 
 
 # [GEMINI] 1.2 Gemini URI scheme
 def test_userinfo_not_allowed():
-    with pytest.raises(ValueError):
+    with pytest.raises(NormalizationError):
         normalize_url("gemini://user:pass@example.com/")
 
 
