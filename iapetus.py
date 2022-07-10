@@ -8,9 +8,15 @@ class NormalizationError(ValueError):
     pass
 
 
+class NonGeminiUrlError(NormalizationError):
+    pass
+
+
 def normalize_url(s):
     u = urlsplit(s)
     scheme = u.scheme.lower()
+    if scheme != "gemini":
+        raise NonGeminiUrlError()
     if u.netloc == "":
         raise NormalizationError("Gemini URI scheme requires the authority component")
     if u.username or u.password:

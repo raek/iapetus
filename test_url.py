@@ -1,6 +1,6 @@
 import pytest
 
-from iapetus import normalize_url, NormalizationError
+from iapetus import normalize_url, NormalizationError, NonGeminiUrlError
 
 
 # References
@@ -12,6 +12,11 @@ from iapetus import normalize_url, NormalizationError
 def test_all_parts_simple_example():
     s = "gemini://example.com:5691/one/two?three#four"
     assert normalize_url(s) == s
+
+
+def test_non_gemini_scheme():
+    with pytest.raises(NonGeminiUrlError):
+        normalize_url("https://example.com/")
 
 
 # [URI] 6.2.2.1.  Case Normalization
