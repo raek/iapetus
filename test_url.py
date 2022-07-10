@@ -1,6 +1,6 @@
 import pytest
 
-from iapetus import normalize_url, NormalizationError, NonGeminiUrlError
+from iapetus import normalize_url, host_port_pair_from_url, NormalizationError, NonGeminiUrlError
 
 
 # References
@@ -184,3 +184,11 @@ def test_fragment_reserved_percent_encoded():
 # [URI] 6.3.  Component Recomposition
 def test_empty_fragment_distinct_from_no_fragment():
     assert normalize_url("gemini://example.com/#") == "gemini://example.com/#"
+
+
+def test_host_port_pair_no_port():
+    assert host_port_pair_from_url("gemini://example.com/") == ("example.com", 1965)
+
+
+def test_host_port_pair_with_port():
+    assert host_port_pair_from_url("gemini://example.com:5691/") == ("example.com", 5691)

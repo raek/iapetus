@@ -13,6 +13,7 @@ class NonGeminiUrlError(NormalizationError):
 
 
 def normalize_url(s):
+    """Normalize Gemini URLs"""
     u = urlsplit(s)
     scheme = u.scheme.lower()
     if scheme != "gemini":
@@ -64,3 +65,9 @@ def normalize_url(s):
         result += "#"
 
     return result
+
+
+def host_port_pair_from_url(normalized_url):
+    """Make a (host: str, port: int) pair from a normalized URL"""
+    u = urlsplit(normalized_url)
+    return u.hostname, (u.port or DEFAULT_PORT)
