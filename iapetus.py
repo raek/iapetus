@@ -36,4 +36,21 @@ def normalize_url(s):
         path = "/"
     query = quote(unquote(u.query), safe="")
     fragment = quote(unquote(u.fragment), safe="")
-    return urlunsplit((scheme, netloc, path, query, fragment))
+    result = urlunsplit((scheme, netloc, path, query, fragment))
+
+    # Workaround for https://bugs.python.org/issue22852 (empty queries and fragments should not be stripped)
+    query_start = s.find("?")
+    fragment_start = s.find("#")
+    has_query = query_start != -1
+    has_fragment = fragment_start != -1
+    if has_query and has_fragment and query_start > fragment_start:
+        has_query = False
+    if has_query and query == "":
+        if has_fragment:
+            result.replace("#", "?#")
+        else:
+            result += "?"
+    if has_fragment and fragment == "":
+        result += "#"
+
+    return result

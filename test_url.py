@@ -146,6 +146,10 @@ def test_query_reserved_percent_encoded():
     assert normalize_url("gemini://example.com/?:") == "gemini://example.com/?%3A"
 
 
+def test_empty_query_distinct_from_no_query():
+    assert normalize_url("gemini://example.com/?") == "gemini://example.com/?"
+
+
 # [URI] 3.5.  Fragment
 def test_fragment_part_is_accepted():
     assert normalize_url("gemini://example.com/#fragment") == "gemini://example.com/#fragment"
@@ -169,3 +173,7 @@ def test_fragment_unreserved_remains():
 # [URI] 6.2.2.2.  Percent-Encoding Normalization
 def test_fragment_reserved_percent_encoded():
     assert normalize_url("gemini://example.com/#:") == "gemini://example.com/#%3A"
+
+
+def test_empty_fragment_distinct_from_no_fragment():
+    assert normalize_url("gemini://example.com/#") == "gemini://example.com/#"
