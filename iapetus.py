@@ -34,6 +34,6 @@ def normalize_url(s):
         path = "".join("/" + segment for segment in without_double_dots)
     if path == "":
         path = "/"
-    query = u.query
-    fragment = u.fragment
+    query = quote(unquote(u.query), safe="")
+    fragment = quote(unquote(u.fragment), safe="")
     return urlunsplit((scheme, netloc, path, query, fragment))

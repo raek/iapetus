@@ -126,6 +126,46 @@ def test_query_part_is_accepted():
     assert normalize_url("gemini://example.com/?query") == "gemini://example.com/?query"
 
 
+# [URI] 6.2.2.2.  Percent-Encoding Normalization
+def test_query_percent_encoded_reserved_remains():
+    assert normalize_url("gemini://example.com/?%3A") == "gemini://example.com/?%3A"
+
+
+# [URI] 6.2.2.2.  Percent-Encoding Normalization
+def test_query_percent_encoded_unreserved_decoded():
+    assert normalize_url("gemini://example.com/?%61") == "gemini://example.com/?a"
+
+
+# [URI] 6.2.2.2.  Percent-Encoding Normalization
+def test_query_unreserved_remains():
+    assert normalize_url("gemini://example.com/?a") == "gemini://example.com/?a"
+
+
+# [URI] 6.2.2.2.  Percent-Encoding Normalization
+def test_query_reserved_percent_encoded():
+    assert normalize_url("gemini://example.com/?:") == "gemini://example.com/?%3A"
+
+
 # [URI] 3.5.  Fragment
 def test_fragment_part_is_accepted():
     assert normalize_url("gemini://example.com/#fragment") == "gemini://example.com/#fragment"
+
+
+# [URI] 6.2.2.2.  Percent-Encoding Normalization
+def test_fragment_percent_encoded_reserved_remains():
+    assert normalize_url("gemini://example.com/#%3A") == "gemini://example.com/#%3A"
+
+
+# [URI] 6.2.2.2.  Percent-Encoding Normalization
+def test_fragment_percent_encoded_unreserved_decoded():
+    assert normalize_url("gemini://example.com/#%61") == "gemini://example.com/#a"
+
+
+# [URI] 6.2.2.2.  Percent-Encoding Normalization
+def test_fragment_unreserved_remains():
+    assert normalize_url("gemini://example.com/#a") == "gemini://example.com/#a"
+
+
+# [URI] 6.2.2.2.  Percent-Encoding Normalization
+def test_fragment_reserved_percent_encoded():
+    assert normalize_url("gemini://example.com/#:") == "gemini://example.com/#%3A"
